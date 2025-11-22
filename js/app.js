@@ -1,3 +1,4 @@
+
 new Vue({
   el: '#app',
   data() {
@@ -10,9 +11,30 @@ new Vue({
         'assets/img/latar2.jpg',
         'assets/img/latar3.jpg',
         'assets/img/latar4.jpg'
-      ]
+      ],
+      state: {
+        stok: [],
+        upbjjList: [],
+        kategoriList: [],
+        paket: [],
+        pengirimanList: [],
+        tracking: []
+      }
     };
   },
+
+  async created() {
+  const data = await ApiService.loadData();
+
+  this.state.stok = data.stok;               // FIX ☑
+  this.state.upbjjList = data.upbjjList;     // FIX ☑
+  this.state.kategoriList = data.kategoriList; // FIX ☑
+  this.state.paket = data.paket;             
+  this.state.pengirimanList = data.pengirimanList;
+  this.state.tracking = data.tracking;
+},
+
+
   mounted() {
     const hour = new Date().getHours();
     if (hour >= 5 && hour < 12) this.sapaan = "Selamat Pagi";

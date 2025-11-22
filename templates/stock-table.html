@@ -1,0 +1,70 @@
+<div class="stock-page">
+  <!-- FILTERS -->
+  <div class="filters">
+    <select v-model="filterUpbjj">
+      <option value="">Semua UPBJJ</option>
+      <option v-for="u in upbjjList" :value="u">{{ u }}</option>
+    </select>
+
+    <select v-if="filterUpbjj" v-model="filterKategori">
+      <option value="">Semua Kategori</option>
+      <option v-for="k in kategoriList" :value="k">{{ k }}</option>
+    </select>
+
+    <label>
+      <input type="checkbox" v-model="filterWarning">
+      Stok Menipis / Kosong
+    </label>
+
+    <button @click="resetFilter">Reset</button>
+
+    <select v-model="sortBy">
+      <option value="judul">Judul</option>
+      <option value="harga">Harga</option>
+      <option value="qty">Stok</option>
+    </select>
+  </div>
+
+  <!-- TABLE -->
+  <table class="stock-table">
+    <thead>
+      <tr>
+        <th>Kode</th>
+        <th>Judul</th>
+        <th>Kategori</th>
+        <th>UPBJJ</th>
+        <th>Rak</th>
+        <th>Harga</th>
+        <th>Qty</th>
+        <th>Safety</th>
+        <th>Status</th>
+        <th>Aksi</th>
+      </tr>
+    </thead>
+
+    <tbody>
+      <tr v-for="item in filteredItems" :key="item.kode">
+        <td>{{ item.kode }}</td>
+        <td>{{ item.judul }}</td>
+        <td>{{ item.kategori }}</td>
+        <td>{{ item.upbjj }}</td>
+        <td>{{ item.lokasiRak }}</td>
+
+        <td>{{ formatHarga(item.harga) }}</td>
+        <td>{{ item.qty }} buah</td>
+        <td>{{ item.safety }} buah</td>
+
+        <td @mouseover="showCatatan(item.catatanHTML)">
+          <status-badge :status="status(item)"></status-badge>
+        </td>
+
+        <td>
+          <button @click="$emit('update', item)">Edit</button>
+          <button @click="$emit('delete', item)">Delete</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+  <button class="add" @click="$emit('create')">+ Tambah</button>
+</div>

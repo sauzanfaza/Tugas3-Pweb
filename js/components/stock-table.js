@@ -1,76 +1,65 @@
 Vue.component('ba-stock-table', {
-  template: '#tpl-stock-table',
+  props: ['items', 'upbjjList', 'kategoriList'],
+
   data() {
     return {
-      data: [],
-      filter: {
-        upbjj: '',
-        kategori: '',
-        reorderOnly: false,
-        kosongOnly: false
-      },
-      sortBy: '',
-      upbjjList: [],
-      kategoriList: [],
-      newItem: {
-        kode: '', judul: '', kategori: '', upbjj: '', lokasiRak: '',
-        harga: 0, qty: 0, safety: 0, catatanHTML: ''
-      }
+      filterUpbjj: '',
+      filterKategori: '',
+      filterWarning: false,
+      sortBy: 'judul'
     };
   },
-  computed: {
-    filteredData() {
-      let result = [...this.data];
-      if (this.filter.upbjj) result = result.filter(d => d.upbjj === this.filter.upbjj);
-      if (this.filter.kategori) result = result.filter(d => d.kategori === this.filter.kategori);
-      if (this.filter.reorderOnly) result = result.filter(d => d.qty < d.safety);
-      if (this.filter.kosongOnly) result = result.filter(d => d.qty === 0);
-      if (this.sortBy) {
-        result.sort((a, b) => {
-          if (this.sortBy === 'judul') return a.judul.localeCompare(b.judul);
-          return a[this.sortBy] - b[this.sortBy];
-        });
-      }
-      return result;
-    }
-  },
-  methods: {
-    resetFilter() {
-      this.filter = { upbjj: '', kategori: '', reorderOnly: false, kosongOnly: false };
-      this.sortBy = '';
-    },
-    statusClass(item) {
-      if (item.qty === 0) return 'status kosong';
-      if (item.qty < item.safety) return 'status menipis';
-      return 'status aman';
-    },
-    statusText(item) {
-      if (item.qty === 0) return '❌ Kosong';
-      if (item.qty < item.safety) return '⚠️ Menipis';
-      return '✅ Aman';
-    },
-    addItem() {
-      if (!this.newItem.kode || !this.newItem.judul) return;
-      this.data.push({ ...this.newItem });
-      this.newItem = { kode: '', judul: '', kategori: '', upbjj: '', lokasiRak: '', harga: 0, qty: 0, safety: 0 };
-    },
-    editItem(i) {
-      const updated = prompt('Update jumlah stok:', this.data[i].qty);
-      if (updated !== null) this.data[i].qty = parseInt(updated);
-    },
-    confirmDelete(i) {
-      if (confirm('Yakin hapus data ini?')) this.data.splice(i, 1);
-    }
-  },
-  mounted() {
-  fetch('assets/data/dataBahanAjar.json')
-    .then(res => res.json())
-    .then(json => {
-      this.data = json.stok;
-      this.upbjjList = json.upbjjList;
-      this.kategoriList = json.kategoriList;
-    });
-}
-});
 
-new Vue({ el: '#app' });
+  async mounted() {
+    try {
+      const html = await fetch('templates/stock-table.html').then(r => r.text());
+
+      // compile template string jadi render function
+      const compiled = Vue.compile(html);
+      this.$options.render = compiled.render;
+      this.$options.staticRenderFns = compiled.staticRenderFns;
+
+      this.$forceUpdate();
+    } catch(err) {
+      console.error("Gagal load template:", err);
+      this.$options.template = `<div style="color:red">⚠ Template ERROR: ${err.message}</div>`;
+      this.$forceUpdate();
+    }
+  },
+
+  computed: {
+    filteredItems() {
+      let data = this.items;
+
+      if (this.filterUpbjj) data = data.filter(i => i.upbjj === this.filterUpbjj);
+      if (this.filterKategori) data = data.filter(i => i.kategori === this.filterKategori);
+      if (this.filterWarning) data = data.filter(i => i.qty < i.safety || i.qty === 0);
+
+      return [...data].sort((a, b) => {
+        if (this.sortBy === 'judul') return a.judul.localeCompare(b.judul);
+        if (this.sortBy === 'harga') return a.harga - b.harga;
+        if (this.sortBy === 'qty') return a.qty - b.qty;
+      });
+    }
+  },
+
+  methods: {
+    formatHarga(h) {
+      return 'Rp ' + h.toLocaleString('id-ID');
+    },
+    status(item) {
+      if (item.qty === 0) return 'kosong';
+      if (item.qty < item.safety) return 'menipis';
+      return 'aman';
+    },
+    resetFilter() {
+      this.filterUpbjj = '';
+      this.filterKategori = '';
+      this.filterWarning = false;
+      this.sortBy = 'judul';
+    },
+    showCatatan(html) {
+      console.log("CATATAN:", html);
+    }
+  }
+});

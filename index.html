@@ -3,33 +3,80 @@
 <head>
   <meta charset="UTF-8">
   <title>SITTA Vue — Tugas 3</title>
-  <script src="https://unpkg.com/vue@2/dist/vue.js"></script>
   <link rel="stylesheet" href="assets/css/styles.css">
+<script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
 </head>
 <body>
   <div id="app">
+    <!-- Navbar -->
     <nav class="navbar">
-  <div class="nav-left">
-    <span class="sapaan">{{ sapaan }}</span>
-  </div>
-  <div>
-    <button @click="tab='stok'">Stok BA</button>
-    <button @click="tab='tracking'">Tracking DO</button>
-    <button @click="tab='order'">Order Baru</button>
-  </div>
-</nav>
+      <div class="nav-left">
+        <span class="sapaan">{{ sapaan }}</span>
+      </div>
+      <div>
+        <button @click="tab='dashboard'">Dashboard</button>
+        <button @click="tab='stok'">Stok BA</button>
+        <button @click="tab='tracking'">Tracking DO</button>
+        <button @click="tab='order'">Order Baru</button>
+      </div>
+    </nav>
 
-  <section class="slider" v-if="tab==='dashboard'">
-  <div class="slides" :style="{ transform: 'translateX(-' + index * 100 + '%)' }">
-    <div class="slide" v-for="(img, i) in images" :key="i" :style="{ backgroundImage: 'url(' + img + ')' }"></div>
-  </div>
-  <div class="overlay"></div>
-  <div class="text-helo">
-    <h1>Selamat Datang di Aplikasi SITTA</h1>
-    <p>“Bahan Ajar, untuk Pembelajaran Tanpa Batas.”</p>
-  </div>
-</section>
+    <!-- Dashboard -->
+    <section class="slider" v-show="tab==='dashboard'">
+      <div class="slides" :style="{ transform: 'translateX(-' + index * 100 + '%)' }">
+        <div class="slide" v-for="(img, i) in images" :key="i"
+             :style="{ backgroundImage: 'url(' + img + ')' }"></div>
+      </div>
+      <div class="overlay"></div>
+      <div class="text-helo">
+        <h1>Selamat Datang di Aplikasi SITTA</h1>
+        <p>“Bahan Ajar, untuk Pembelajaran Tanpa Batas.”</p>
+      </div>
+    </section>
 
+    <!-- Stok -->
+    <section v-show="tab==='stok'">
+      <ba-stock-table
+        :items="state.stok"
+        :upbjj-list="state.upbjjList"
+        :kategori-list="state.kategoriList"
+        @create="handleCreateStock"
+        @update="handleUpdateStock"
+        @delete="handleDeleteStock"
+      ></ba-stock-table>
+    </section>
+
+    <!-- Tracking -->
+    <section v-show="tab==='tracking'">
+      <do-tracking
+        :data="state.tracking"
+        :paket="state.paket"
+        :ekspedisi="state.pengirimanList"
+        @created="handleNewDO"
+      ></do-tracking>
+    </section>
+
+    <!-- Order -->
+    <section v-show="tab==='order'">
+      <order-form
+        :paket="state.paket"
+        :ekspedisi="state.pengirimanList"
+        @created="handleNewDO"
+      ></order-form>
+    </section>
+
+    <!-- Modal -->
+    <app-modal ref="modal"></app-modal>
+  </div>
+
+
+  <!-- Scripts -->
+  <script src="js/services/api.js"></script>
+  <script src="js/components/status-badge.js"></script>
+  <script src="js/components/app-modal.js"></script>
+  <script src="js/components/stock-table.js"></script>
+  <script src="js/components/order-form.js"></script>
+  <script src="js/components/do-tracking.js"></script>
   <script src="js/app.js"></script>
 </body>
 </html>

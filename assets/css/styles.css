@@ -49,6 +49,7 @@ body {
 .slides {
   display: flex;
   transition: transform 0.5s ease-in-out;
+  height: 100%;
 }
 
 .slide {
@@ -77,4 +78,49 @@ body {
 .waktu-user {
   padding: 2px;
   text-align: left;
+}
+
+/* stock-table */
+.stock-page {
+  padding: 20px;
+  background: #fafafa;
+  border-radius: 8px;
+}
+
+.filters {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 20px;
+  align-items: center;
+}
+
+.stock-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+}
+
+.stock-table th,
+.stock-table td {
+  padding: 10px;
+  border: 1px solid #ddd;
+  text-align: left;
+}
+
+.stock-table th {
+  background: #f0f0f0;
+  font-weight: bold;
+}
+
+.add {
+  margin-top: 15px;
+  padding: 10px 15px;
+  background: #2a7cff;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+.add:hover {
+  background: #1b5cd8;
 }
