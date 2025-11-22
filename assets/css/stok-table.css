@@ -1,0 +1,74 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 20px;
+  background: #f9f9f9;
+}
+
+.stok-section {
+  max-width: 1200px;
+  margin: auto;
+}
+
+.filter-bar,
+.form-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.filter-bar select,
+.form-bar input,
+.filter-bar button {
+  padding: 8px;
+  font-size: 14px;
+}
+
+.filter-bar label {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 14px;
+}
+
+.stok-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+  box-shadow: 0 0 5px rgba(0,0,0,0.1);
+}
+
+.stok-table th,
+.stok-table td {
+  border: 1px solid #ccc;
+  padding: 10px;
+  text-align: left;
+}
+
+.stok-table th {
+  background-color: #eee;
+}
+
+.stok-table td button {
+  margin-right: 5px;
+  padding: 4px 8px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+/* Status badge */
+.status.aman {
+  color: green;
+  font-weight: bold;
+}
+
+.status.menipis {
+  color: orange;
+  font-weight: bold;
+}
+
+.status.kosong {
+  color: red;
+  font-weight: bold;
+}
