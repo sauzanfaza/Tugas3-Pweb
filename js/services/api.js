@@ -1,8 +1,3 @@
-// js/services/api.js
-/**
- * Modul untuk menangani pengambilan data dari sumber JSON.
- */
-
 const API_ENDPOINT = 'data/dataBahanAjar.json';
 
 /**

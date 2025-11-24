@@ -124,7 +124,7 @@ Vue.component('ba-stock-table', {
             // Reset form
             this.newItem = this.getNewItemDefaults();
             this.isAdding = false;
-            this.$root.$refs.modal.showModal('Sukses', `Bahan Ajar **${newItem.judul}** berhasil ditambahkan.`);
+            this.$root.$refs.modal.showModal('Sukses', `Bahan Ajar ${newItem.judul} berhasil ditambahkan.`);
         },
         startEdit(item) {
             // Buat salinan objek agar tidak langsung memodifikasi data asli
@@ -141,7 +141,7 @@ Vue.component('ba-stock-table', {
             // Emit event ke Root Vue Instance untuk update data
             this.$emit('item-updated', item);
             this.itemToEdit = null;
-            this.$root.$refs.modal.showModal('Sukses', `Bahan Ajar **${item.judul}** berhasil diperbarui.`);
+            this.$root.$refs.modal.showModal('Sukses', `Bahan Ajar ${item.judul} berhasil diperbarui.`);
         },
         confirmDelete(item) {
             this.itemToDelete = item;
@@ -149,7 +149,7 @@ Vue.component('ba-stock-table', {
         deleteItem() {
             const item = this.itemToDelete;
             this.$emit('item-deleted', item.kode);
-            this.$root.$refs.modal.showModal('Sukses', `Bahan Ajar **${item.judul}** berhasil dihapus.`);
+            this.$root.$refs.modal.showModal('Sukses', `Bahan Ajar ${item.judul} berhasil dihapus.`);
             this.itemToDelete = null;
         }
     },

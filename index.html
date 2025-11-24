@@ -72,14 +72,14 @@
     </div>
 
     
-    <!-- tpl-badge (konten dari status-badge.html) -->
+    <!-- tpl-badge-->
     <template id="tpl-badge">
         <span class="status-badge" :class="status.class" :title="status.text">
-            {{ status.symbol }} {{ status.text }}
+            {{ status.text }}
         </span>
     </template>
 
-    <!-- tpl-modal (konten dari app-modal.html) -->
+    <!-- tpl-modal-->
     <template id="tpl-modal">
         <div v-if="isVisible" class="modal-overlay">
             <div class="modal-card">
@@ -92,7 +92,7 @@
         </div>
     </template>
 
-     <!-- tpl-stock (konten dari stock-table.html) -->
+     <!-- tpl-stock-->
     <template id="tpl-stock">
         <div class="stock-page">
             <h2>Daftar Stok Bahan Ajar Universitas Terbuka</h2>
@@ -213,7 +213,7 @@
         </div>
     </template>
 
-    <!-- tpl-stock (konten dari stock-table.html) -->
+    <!-- tpl-tracking-->
     <template id="tpl-tracking">
     <div>
         <h2>Tracking Delivery Order (DO)</h2>

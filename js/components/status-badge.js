@@ -10,19 +10,16 @@ Vue.component('status-badge', {
                 return {
                     text: 'Kosong',
                     class: 'status-danger',
-                    symbol: '❌'
                 };
             } else if (this.qty < this.safety) {
                 return {
                     text: 'Menipis',
                     class: 'status-warning',
-                    symbol: '⚠️'
                 };
             } else {
                 return {
                     text: 'Aman',
                     class: 'status-safe',
-                    symbol: '✅'
                 };
             }
         }

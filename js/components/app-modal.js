@@ -1,8 +1,3 @@
-// js/components/app-modal.js
-/**
- * Komponen Modal Reusable
- * Template ID: tpl-modal
- */
 Vue.component('app-modal', {
     template: '#tpl-modal',
     data() {
@@ -25,7 +20,7 @@ Vue.component('app-modal', {
             this.message = message;
             this.isVisible = true;
 
-            // Menggunakan Promise agar bisa menunggu input pengguna (mirip confirm/alert)
+            // Menggunakan Promise agar bisa menunggu input pengguna
             return new Promise(r => {
                 this.resolve = r;
             });

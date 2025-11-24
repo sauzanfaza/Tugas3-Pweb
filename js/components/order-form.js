@@ -1,9 +1,3 @@
-// js/components/order-form.js
-/**
- * Komponen Formulir Pemesanan Bahan Ajar Baru
- * Template ID: tpl-order
- * Fitur: Auto DO Number, Detail Paket, Harga, Validasi, Emit event.
- */
 Vue.component('order-form', {
     template: '#tpl-order',
     props: ['paket', 'ekspedisi'],
@@ -30,7 +24,7 @@ Vue.component('order-form', {
 },
     methods: {
         getNewOrderDefaults() {
-            // Menggunakan format tanggal yang sama dengan API Service untuk konsistensi
+            // Menggunakan format tanggal yang sama dengan API Service
             const today = new Date().toLocaleDateString('id-ID', { day: 'numeric', month: 'long', year: 'numeric' });
             return {
                 nim: '',
@@ -48,8 +42,6 @@ Vue.component('order-form', {
                 paketKode: this.selectedPackage.kode,
                 paketNama: this.selectedPackage.nama,
                 paketHarga: this.selectedPackage.harga,
-
-                // --- EKSPEDISI FIX ---
                 ekspedisiKode: this.selectedExpedition.kode,
                 ekspedisiNama: this.selectedExpedition.nama,
                 ekspedisiHarga: this.selectedExpedition.harga,

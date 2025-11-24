@@ -1,4 +1,3 @@
-// js/app.js
 document.addEventListener('DOMContentLoaded', async () => {
     // 1. Ambil data dari service
     const initialData = await window.dataService.fetchData();
@@ -117,8 +116,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     // Event listener untuk tombol 'Enter' pada form Tambah/Edit
     document.addEventListener('keyup', (event) => {
         if (event.key === 'Enter') {
-            // Logic untuk Stock Table (Create/Update)
-            // Mendapatkan referensi ke child component stock-table secara tidak langsung
             const stockTable = app.$children.find(c => c.$options.name === 'ba-stock-table');
             if (stockTable && app.tab === 'stok') {
                 if (stockTable.itemToEdit) {
